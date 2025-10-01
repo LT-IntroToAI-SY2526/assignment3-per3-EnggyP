@@ -200,12 +200,12 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
+    title = matches[0]
     result = []
-    title = int(matches[0])
 
     for movie in movie_db:
-        if "jaws" in get_year(movie):
-            result = get_title(movie)
+        if get_title(movie) == title:
+            result.append (get_year(movie))
 
     return result
 
@@ -222,15 +222,12 @@ def title_by_actor(matches: List[str]) -> List[str]:
         a list of movie titles that the actor acted in
     """
     result = []
-    actor_name = matches [0]
-
+    actor = matches [0]
+    
     for movie in movie_db:
-        actors = get_actors(movie)
-
-        for actor in actors:
-            if actor_name in actor:
-                result.append(get_title(movie))
-
+        if actor in get_actors(movie):
+            result.append(get_title(movie))
+    
     return result
 
 

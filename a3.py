@@ -230,6 +230,21 @@ def title_by_actor(matches: List[str]) -> List[str]:
     
     return result
 
+def directors_by_decade(matches: List[str]) -> List[int]:
+    result = []
+    decade = matches[0]
+
+    start_year = int(decade[:-1])
+    end_year = start_year + 9
+
+    for movie in movie_db:
+        year = get_year(movie)
+        if start_year <= year <= end_year:
+            director = get_director(movie)
+            if director not in result:
+                result.append(get_director(movie))
+
+    return result
 
 # dummy argument is ignored and doesn't matter
 def bye_action(dummy: List[str]) -> None:
@@ -251,6 +266,7 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("who acted in %"), actors_by_title),
     (str.split("when was % made"), year_by_title),
     (str.split("in what movies did % appear"), title_by_actor),
+    (str.split("what directors are from _"), directors_by_decade),
     (["bye"], bye_action),
 ]
 
@@ -267,7 +283,17 @@ def search_pa_list(src: List[str]) -> List[str]:
         a list of answers. Will be ["I don't understand"] if it finds no matches and
         ["No answers"] if it finds a match but no answers
     """
-    pass
+    for pat, act in pa_list:
+        print(f"pattern: {pat}, source: {src}, action: {act}")
+        mat = match(pat, src)
+        print(f"match: {mat}")
+
+        if mat is not None:
+            ans = act(mat)
+            print(f"answer: {ans}")
+            return ans if ans else["No answers"]
+        
+    return ["I don't understand"]
 
 
 def query_loop() -> None:
@@ -338,6 +364,10 @@ if __name__ == "__main__":
     assert sorted(title_by_actor(["orson welles"])) == sorted(
         ["citizen kane", "othello"]
     ), "failed title_by_actor test"
+    assert isinstance(directors_by_decade(["2000s"]), list), "directors_by_decade not returning a list"
+    assert sorted(directors_by_decade(["2000s"])) == sorted(
+        ["christopher nolan", "sofia coppola"]
+    ),    "failed directors_by_decade test"
     
     
     assert sorted(search_pa_list(["hi", "there"])) == sorted(

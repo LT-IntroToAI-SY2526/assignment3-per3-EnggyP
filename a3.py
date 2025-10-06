@@ -234,6 +234,7 @@ def directors_by_decade(matches: List[str]) -> List[int]:
     result = []
     decade = matches[0]
 
+
     start_year = int(decade[:-1])
     end_year = start_year + 9
 
@@ -242,9 +243,10 @@ def directors_by_decade(matches: List[str]) -> List[int]:
         if start_year <= year <= end_year:
             director = get_director(movie)
             if director not in result:
-                result.append(get_director(movie))
+                result.append(director(movie))
 
     return result
+
 
 # dummy argument is ignored and doesn't matter
 def bye_action(dummy: List[str]) -> None:
@@ -364,10 +366,10 @@ if __name__ == "__main__":
     assert sorted(title_by_actor(["orson welles"])) == sorted(
         ["citizen kane", "othello"]
     ), "failed title_by_actor test"
-    assert isinstance(directors_by_decade(["2000s"]), list), "directors_by_decade not returning a list"
-    assert sorted(directors_by_decade(["2000s"])) == sorted(
-        ["christopher nolan", "sofia coppola"]
-    ),    "failed directors_by_decade test"
+    assert isinstance(directors_by_decade(["1990s"]), list), "directors_by_decade not returning a list"
+    assert sorted(directors_by_decade(["1990s"])) == sorted(
+        ["noah taylor", "thandie newton", "nicole kidman"]
+    ), "failed directors_by_decade test"
     
     
     assert sorted(search_pa_list(["hi", "there"])) == sorted(

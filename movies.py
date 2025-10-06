@@ -435,7 +435,8 @@ movie_db: List[Tuple[str, str, int, List[str]]] = [
             "spike lee",
         ],
     ),
-    (
+    ( 
+
         "spider-man: no way home",
         "jon watts",
         2021,

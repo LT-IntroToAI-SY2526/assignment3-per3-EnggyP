@@ -435,4 +435,21 @@ movie_db: List[Tuple[str, str, int, List[str]]] = [
             "spike lee",
         ],
     ),
+    ( 
+        "spider-man: no way home",
+        "jon watts",
+        2021,
+        [
+            "tom holland",
+            "zendeya ",
+            "andrew garfield",
+            "toby maguire",
+            "jacob batalon",
+            "willem dafoe",
+            "jamie foxx",
+            "alfred molina",
+            "benedict cumberbatch",
+            "jon favreau",
+        ],
+    )
 ]
